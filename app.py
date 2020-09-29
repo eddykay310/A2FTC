@@ -149,13 +149,13 @@ def sortFiles(seqfolder_list,home,group):
     i=0
     temp=[]
 
+    if not os.path.exists(home):
+            os.makedirs(f"{home}/all_FASTA")
     # Copys files in to one folder
     for folder in seqfolder_list:
-        if not os.path.exists(home):
-            os.makedirs(f"{home}/all_FASTA")     
-            for file in os.listdir(f"{home}/{folder}/FASTA"):
-                if file.endswith(".fasta"):
-                    shutil.copy(os.path.join(f"{home}/{folder}/FASTA",file),f"{home}/all_FASTA")
+        for file in os.listdir(fr"{home}\\{folder}\\FASTA"):
+            if file.endswith(".fasta"):
+                shutil.copy(os.path.join(f"{home}/{folder}/FASTA",file),f"{home}/all_FASTA")
 
     # Sorting files into subfolders
     for i in range(len(group)):
