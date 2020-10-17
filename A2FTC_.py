@@ -58,27 +58,28 @@ def combineFasta(folders):
 def runTRF(baseDIR,folders):
 
     # Runs tandem repeat finder program with set parameters
-    for homeDIR in folders:
+    for DIR in folders:
 
         fileDIR = fr'{baseDIR}\\trf409.dos64.exe'
-        subprocess.call([fileDIR,f"{homeDIR}\combined_fasta_file.fasta","2", "7", "7", "80", "10", "50", "2000"])
-
-        # Opens summary html with default browser
-        for file in os.listdir(homeDIR):
-            if file.endswith(".summary.html"):
-                filepath = os.path.realpath(file)
-                webbrowser.open('file://' + filepath)
+        subprocess.call([fileDIR,f"{DIR}\combined_fasta_file.fasta","2", "7", "7", "80", "10", "50", "2000"])
 
         # Moving html files to web_results folder
-        if not os.path.exists(f"{homeDIR}/web_results"):
-            os.makedirs(f"{homeDIR}/web_results")
+        if not os.path.exists(f"{DIR}/web_results"):
+            os.makedirs(f"{DIR}/web_results")
 
         resultssourcefiles = os.listdir(baseDIR)
-        resultsdestinationpath = f"{homeDIR}\web_results"
+        resultsdestinationpath = f"{DIR}\web_results"
 
         for file in resultssourcefiles:
             if file.endswith('.html'):
                 shutil.move(os.path.join(baseDIR,file), os.path.join(resultsdestinationpath,file))
+
+         # Opens summary html with default browser
+        for item in os.listdir(f"{DIR}\web_results"):
+            if item.endswith(".summary.html"):
+                filepath = f"{DIR}\web_results\{item}"
+                print(filepath)
+                webbrowser.open('file:///' + filepath.replace(os.sep, '/'))
 
     print("\n\n###### Results files moved to FASTA folder #######\n")
 

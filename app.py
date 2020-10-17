@@ -107,7 +107,7 @@ distcharlab.place(relwidth=0.15,relheight=0.1,relx=0.025,rely=0.05)
 distchar = tk.Entry(bottomframe)
 distchar.place(relwidth=0.495,relheight=0.1,relx=0.18,rely=0.05)
 
-choose = tk.Button(trightframe,text="Choose Folders",padx=10,pady=6,bg="white",fg="#263D42",command=lambda:A2FTC_.abiFolders(baseDIR))
+choose = tk.Button(trightframe,text="Choose Folders",padx=10,pady=6,bg="white",fg="#263D42",command=lambda:abiFolders(baseDIR))
 choose.pack()
 a2f = tk.Button(trightframe,text="ABI->FASTA",padx=10,pady=6,bg="white",fg="#263D42",command=lambda:A2FTC_.abi2Fasta(folders))
 a2f.pack()
