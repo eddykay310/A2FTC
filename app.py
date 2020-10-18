@@ -7,6 +7,7 @@ import subprocess
 import webbrowser
 import A2FTC_
 import sort_csld_
+import csv_maker
 
 
 baseDIR = A2FTC_.baseDIR
@@ -93,7 +94,7 @@ bottomframe = tk.Frame(root,bg="#c2beba")
 bottomframe.place(relwidth=0.9,relheight=0.4,relx=0.05,rely=0.51)
 
 trightframe = tk.Frame(topframe,bg="#c2beba")
-trightframe.place(relwidth=0.25,relheight=0.8,relx=0.725,rely=0.05)
+trightframe.place(relwidth=0.25,relheight=0.9,relx=0.725,rely=0.05)
 tleftframe = tk.Frame(topframe,bg="white")
 tleftframe.place(relwidth=0.65,relheight=0.9,relx=0.025,rely=0.05)
 
@@ -115,6 +116,8 @@ combineFASTA = tk.Button(trightframe,text="Combine FASTA",padx=10,pady=6,bg="whi
 combineFASTA.pack()
 trf = tk.Button(trightframe,text="Tandem Repeat Finder",padx=10,pady=6,bg="white",fg="#263D42",command=lambda:A2FTC_.runTRF(baseDIR,folders))
 trf.pack()
+df_maker = tk.Button(trightframe,text="Dataframe Maker",padx=10,pady=6,bg="white",fg="#263D42",command=lambda:csv_maker.csvMaker())
+df_maker.pack()
 dbf = tk.Button(trightframe,text="Delete Base Files",padx=10,pady=6,bg="white",fg="#263D42",command=lambda:delselfol(folders))
 dbf.pack()
 
