@@ -118,7 +118,7 @@ trf = tk.Button(trightframe,text="Tandem Repeat Finder",padx=10,pady=6,bg="white
 trf.pack()
 df_maker = tk.Button(trightframe,text="Dataframe Maker",padx=10,pady=6,bg="white",fg="#263D42",command=lambda:csv_maker.csvMaker())
 df_maker.pack()
-dbf = tk.Button(trightframe,text="Delete Base Files",padx=10,pady=6,bg="white",fg="#263D42",command=lambda:delselfol(folders))
+dbf = tk.Button(trightframe,text="Delete Selected Folders",padx=10,pady=6,bg="white",fg="#263D42",command=lambda:delselfol(folders))
 dbf.pack()
 
 bchoose = tk.Button(brightframe,text="Choose Folders",padx=10,pady=6,bg="white",fg="#263D42",command=lambda:botabiFolders(home))
