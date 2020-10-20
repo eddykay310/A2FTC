@@ -8,9 +8,8 @@ import webbrowser
 # Converts files from abi to fasta
 baseDIR = os.getcwd()
 homeDIR = os.getcwd()
-sourcefiles = os.listdir(homeDIR)
-destinationpath = f"{homeDIR}\FASTA"
-folders = []
+sourcefiles = os.listdir(baseDIR)
+destinationpath = os.path.join(baseDIR, "FASTA")
 
 def abi2Fasta(folders):
     
@@ -21,39 +20,37 @@ def abi2Fasta(folders):
             
             if filename.endswith(".ab1"):
                 # print(filename)
-                count = SeqIO.convert(f"{homeDIR}\\{filename}", "abi", f"{homeDIR}\\{filename}.fasta", "fasta")
+                SeqIO.convert(os.path.join(homeDIR, filename), "abi", os.path.join(homeDIR, f"{filename}.fasta"), "fasta")
                 counter+=1
-        print (f"\n\n####### {counter} files were converted #########")
+        print (f"\n####### {counter} files were converted #########")
 
         # Moves fasta files to created FASTA folder
-        if not os.path.exists(f"{homeDIR}/FASTA"):
-            os.makedirs(f"{homeDIR}/FASTA")
-
-        destinationpath = f"{homeDIR}\FASTA"
+        destinationpath = os.path.join(homeDIR, "FASTA")
         # print(destinationpath)
+        if not os.path.exists(destinationpath):
+            os.makedirs(destinationpath)
 
         for file in os.listdir(homeDIR):
             # print(file)
             if file.endswith('.fasta'):
                 shutil.move(os.path.join(homeDIR,file), os.path.join(destinationpath,file))
-        print("\n\n###### FASTA files moved to FASTA folder #######")
+        print("\n###### FASTA files moved to FASTA folder #######")
 
 # Combines single fasta files in to a single combined fasta file. This is if the files have been grouped to your liking else use the sort_cons.py file
 def combineFasta(folders):
 
     for homeDIR in folders:
-        DIR = f"{homeDIR}\FASTA"
+        DIR = os.path.join(homeDIR, "FASTA")
+        combined_fasta_dir = os.path.join(homeDIR, "combined_fasta_file.fasta")
+        cff = open(combined_fasta_dir, 'w')
 
-        if not os.path.exists(f"{homeDIR}\combined_fasta_file.fasta"):
-            cff = open(f"{homeDIR}\combined_fasta_file.fasta", 'w')
-
-            for file in os.listdir(DIR):
-                sff = open(os.path.join(DIR, file))
-                for line in sff:
-                    cff.write(line)
-                sff.close()
-            cff.close()
-        print("\n\n######## FASTA files combined into a single file #######")
+        for file in os.listdir(DIR):
+            sff = open(os.path.join(DIR, file))
+            for line in sff:
+                cff.write(line)
+            sff.close()
+        cff.close()
+        print("\n######## FASTA files combined into a single file #######")
 
 def runTRF(baseDIR,folders):
 
@@ -61,27 +58,28 @@ def runTRF(baseDIR,folders):
     for DIR in folders:
 
         fileDIR = fr'{baseDIR}\\trf409.dos64.exe'
-        subprocess.call([fileDIR,f"{DIR}\combined_fasta_file.fasta","2", "7", "7", "80", "10", "50", "2000"])
+        subprocess.call([fileDIR, os.path.join(DIR, "combined_fasta_file.fasta"),"2", "7", "7", "80", "10", "50", "2000"])
 
         # Moving html files to web_results folder
-        if not os.path.exists(f"{DIR}/web_results"):
-            os.makedirs(f"{DIR}/web_results")
+        web_results_dir = os.path.join(DIR, "web_results")
+        if not os.path.exists(web_results_dir):
+            os.makedirs(web_results_dir)
 
         resultssourcefiles = os.listdir(baseDIR)
-        resultsdestinationpath = f"{DIR}\web_results"
+        resultsdestinationpath = web_results_dir
 
         for file in resultssourcefiles:
             if file.endswith('.html'):
                 shutil.move(os.path.join(baseDIR,file), os.path.join(resultsdestinationpath,file))
 
          # Opens summary html with default browser
-        for item in os.listdir(f"{DIR}\web_results"):
+        for item in os.listdir(web_results_dir):
             if item.endswith(".summary.html"):
-                filepath = f"{DIR}\web_results\{item}"
-                print(filepath)
+                filepath = os.path.join(web_results_dir,item)
+                # print(filepath)
                 webbrowser.open('file:///' + filepath.replace(os.sep, '/'))
 
-    print("\n\n###### Results files moved to FASTA folder #######\n")
+    print("\n###### Results files moved to FASTA folder #######\n")
 
 
 

@@ -1,14 +1,16 @@
 from bs4 import BeautifulSoup
 import os
 import pandas as pd
-import A2FTC_
 
-all_csvs = []
 
-def csvMaker():
+def csvMaker(base_dir,folders):
 
-    for folder in A2FTC_.folders:
-
+    all_csvs = []
+    csvs = []
+    csv_names = []
+    
+    for folder in folders:
+        
         web_res_fol = os.path.join(folder, "web_results")
 
         for item in os.listdir(web_res_fol):
@@ -21,9 +23,11 @@ def csvMaker():
         list_header = []
         summary_header = summary_soup.find_all("table")[0].find("tr")
 
-        for columns in summary_header:
+        for column in summary_header:
             try:
-                list_header.append(columns.text)
+                column = column.text
+                column = column.replace("\n"," ").replace(" ","")
+                list_header.append(column)
             except:
                 continue
 
@@ -42,9 +46,11 @@ def csvMaker():
 
             if counter == 0:
                 sample_header = sample_soup.find_all("table")[0].find("tr")
-                for items in sample_header:
+                for column in sample_header:
                     try:
-                        list_header.append(items.text)
+                        column = column.text
+                        column = column.replace("\n"," ").replace(" ","")
+                        list_header.append(column)
                     except:
                         continue
             counter+=1
@@ -63,23 +69,22 @@ def csvMaker():
                 data.append(sub_data)
 
         # Storing the data into Pandas DataFrame 
-        dataFrame = pd.DataFrame(data = data, columns = list_header) 
+        dataFrame = pd.DataFrame(data = data,columns=list_header)
 
         # Converting Pandas DataFrame into CSV file 
         csv_name = folder.split("/")[-1]
         csv_path = os.path.join(web_res_fol, f"{csv_name}.csv")
         dataFrame.to_csv(csv_path,index=False) 
-
+        csv_names.append(csv_name)
         all_csvs.append(csv_path)
-
+    
     print("###############Individual CSVs made in the web results folder of each selected folder#########")
     
-    csvs = []
     for csv in all_csvs:
         read_csv = pd.read_csv(csv)
         csvs.append(read_csv)
-
-    combined = pd.concat(csvs,keys=[i for i in range(len(csvs))],sort=False)
+    
+    combined = pd.concat(csvs,keys=[i for i in csv_names],sort=False,names=['Folders','ID'])
     combined.to_csv('combined_repeat_files.csv')
 
     print("###############Combined CSV made in parent folder of each selected folder#########")
