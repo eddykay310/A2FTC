@@ -22,7 +22,7 @@ def abi2Fasta(folders):
                 # print(filename)
                 SeqIO.convert(os.path.join(homeDIR, filename), "abi", os.path.join(homeDIR, f"{filename}.fasta"), "fasta")
                 counter+=1
-        print (f"\n####### {counter} files were converted #########")
+        print (f"{counter} files were converted")
 
         # Moves fasta files to created FASTA folder
         destinationpath = os.path.join(homeDIR, "FASTA")
@@ -34,11 +34,11 @@ def abi2Fasta(folders):
             # print(file)
             if file.endswith('.fasta'):
                 shutil.move(os.path.join(homeDIR,file), os.path.join(destinationpath,file))
-        print("\n###### FASTA files moved to FASTA folder #######")
+        print("\nFASTA files moved to FASTA folder")
 
 # Combines single fasta files in to a single combined fasta file. This is if the files have been grouped to your liking else use the sort_cons.py file
 def combineFasta(folders):
-
+    print(folders)
     for homeDIR in folders:
         DIR = os.path.join(homeDIR, "FASTA")
         combined_fasta_dir = os.path.join(homeDIR, "combined_fasta_file.fasta")
@@ -50,7 +50,7 @@ def combineFasta(folders):
                 cff.write(line)
             sff.close()
         cff.close()
-        print("\n######## FASTA files combined into a single file #######")
+        print("\nFASTA files combined into a single file")
 
 def runTRF(baseDIR,folders):
 
@@ -70,16 +70,18 @@ def runTRF(baseDIR,folders):
 
         for file in resultssourcefiles:
             if file.endswith('.html'):
+                print("Moving:",file)
                 shutil.move(os.path.join(baseDIR,file), os.path.join(resultsdestinationpath,file))
 
          # Opens summary html with default browser
         for item in os.listdir(web_results_dir):
             if item.endswith(".summary.html"):
+                print("Opening:",item)
                 filepath = os.path.join(web_results_dir,item)
                 # print(filepath)
                 webbrowser.open('file:///' + filepath.replace(os.sep, '/'))
 
-    print("\n###### Results files moved to FASTA folder #######\n")
+    print("\nResults files moved to FASTA folder")
 
 
 

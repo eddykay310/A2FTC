@@ -12,6 +12,16 @@ baseDIR = os.getcwd()
 # sourcefiles = A2FTC_.sourcefiles
 # destinationpath = A2FTC_.destinationpath
 
+######################################################################################
+#sort_csld.py variables
+
+home = sort_csld_.home
+seqfolder_list = sort_csld_.seqfolder_list
+group = sort_csld_.group
+grouped_filesDIR = sort_csld_.grouped_filesDIR
+bfolders = sort_csld_.bfolders
+
+#####################################################################################
 def delselfol(folders):
     # Deleting redundant files
     # for homeDIR in folders:
@@ -25,8 +35,9 @@ def delselfol(folders):
         widget.destroy()
 
     folders.clear()
+    bfolders.clear()
     # shutil.rmtree(f"{homeDIR}\\FASTA")
-    print("####### Deleting selected folders ########\n")
+    print("####### Deleted selected folders ########\n")
 
     # print ('''
     #         This program can only be run once in the present folder.\n
@@ -56,19 +67,17 @@ def abiFolders(homeDIR):
         folderlabel.pack()
 
 ############################################################################################
-home = sort_csld_.home
-seqfolder_list = sort_csld_.seqfolder_list
-group = sort_csld_.group
-grouped_filesDIR = sort_csld_.grouped_filesDIR
-bfolders = sort_csld_.bfolders
 
 def botabiFolders(home):
     for widget in bleftframe.winfo_children():
         widget.destroy()
 
-    folderName = filedialog.askdirectory(initialdir=home,title="Select Folder")
-    if folderName != "":
-        bfolders.append(folderName)
+    while True:
+        folderName = filedialog.askdirectory(initialdir=home, title="Select Folder")
+        if not folderName:
+            break
+        else:
+            bfolders.append(folderName)
 
     for folder in bfolders:
         folderlabel = tk.Label(bleftframe,text=folder,bg="gray")

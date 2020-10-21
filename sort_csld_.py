@@ -2,68 +2,66 @@ import shutil, os
 
 
 home = os.getcwd()
+seqfolder_list = []
+group = []
 all_fasta = os.path.join(home, "all_FASTA")
-
-seqfolder_list = ["AM-2","AM-3","AM-4","AM-5"]
-group = ["A","B","C","D","E","F","G","H"]
 grouped_filesDIR = []
 bfolders = []
 
 def sortFiles(seqfolder_list,home,group):
     i=0
     temp=[]
-    all_fasta = os.path.join(home, "all_FASTA")
 
-    if not os.path.exists(home):
+    if not os.path.exists(all_fasta):
         os.makedirs(all_fasta)
-    # Copys files in to one folder
-    for folder in seqfolder_list:
-        for file in os.listdir(fr"{home}\\{folder}\\FASTA"):
-            if file.endswith(".fasta"):
-                shutil.copy(os.path.join(f"{home}/{folder}/FASTA",file),f"{home}/all_FASTA")
+
+    # Copying files in to one folder
+    print("\nCopying FASTA files to all_FASTA folder")
+    try:
+        for folder in seqfolder_list:
+            for file in os.listdir(fr"{home}\\{folder}\\FASTA"):
+                if file.endswith(".fasta"):
+                    shutil.copy(os.path.join(f"{home}/{folder}/FASTA",file),f"{home}/all_FASTA")
+    except Exception as e:
+        print(e)
 
     # Sorting files into subfolders
-    for i in range(len(group)):
-        for file in os.listdir(f"{home}/all_FASTA"):
-            if i<len(group) and file.endswith(f"{group[i]}.ab1.fasta"):
-                temp.append(os.path.join(f"{home}\\all_FASTA",file))
-        if i<len(group) and not os.path.exists(f"{home}/all_FASTA/{group[i]}/FASTA"):
-            os.makedirs(f"{home}/all_FASTA/{group[i]}/FASTA")
-            for path in temp: 
-                shutil.move(path,f"{home}\\all_FASTA\\{group[i]}\\FASTA")
-            i+=1
-        temp.clear()
-    print("######## Files sorted into folders #########\n")
-
-    # Getting grouped files directory into list
-    for rootDIR, directory, files in os.walk(f"{home}\\all_FASTA"):
-        grouped_filesDIR.append(rootDIR)
-    return grouped_filesDIR
+    try:
+        for i in range(len(group)):
+            print("Sorting group",group[i])
+            for file in os.listdir(os.path.join(home,"all_FASTA")):
+                if i<len(group) and file.endswith(f"{group[i]}.ab1.fasta"):
+                    temp.append(os.path.join(f"{home}\\all_FASTA",file))
+            if i<len(group) and not os.path.exists(f"{home}/all_FASTA/{group[i]}/FASTA"):
+                os.makedirs(f"{home}/all_FASTA/{group[i]}/FASTA")
+                for path in temp: 
+                    shutil.move(path,f"{home}\\all_FASTA\\{group[i]}\\FASTA")
+                i+=1
+            temp.clear()
+        print("\nFiles sorted into folders\n")
+    except Exception as e:
+        print(e)
 
 def consolidateFasta(grouped_filesDIR):
+
+    #  Getting grouped files directory into list
+    for folder in os.listdir(all_fasta):
+        print(folder)
+        if os.path.isdir:
+            grouped_filesDIR.append(os.path.join(all_fasta,folder))
+    print("\nFolders found:", grouped_filesDIR)
+
     # Consolidating fasta files
-    if grouped_filesDIR:
-        for DIR in grouped_filesDIR[1:]:
-            # print(DIR)
-            fasta_dir = os.path.join(DIR,'FASTA')
-            cff = open(os.path.join(fasta_dir, 'combined_fasta_files.fasta'), 'w')
-            for item in os.listdir(fasta_dir):
-                # print(item)
-                sff = open(os.path.join(fasta_dir, item))
-                for line in sff:
-                    cff.write(line)
-                sff.close()
-            cff.close()
-    else:
-        for rootDIR, dir_, files in os.walk(f"{home}\\all_FASTA"):
-            fasta_dir = os.path.join(dir_,'FASTA')
-            cff = open(os.path.join(fasta_dir, 'combined_fasta_files.fasta'), 'w')
-            for item in os.listdir(fasta_dir):
-                # print(item)
-                sff = open(os.path.join(fasta_dir, item))
-                for line in sff:
-                    cff.write(line)
-                sff.close()
-                
-            cff.close()
-    print("######## FASTA files combined into a single file based on groups #######")
+    for folder in grouped_filesDIR:
+        print("combining FASTA files in:",folder)
+        DIR = os.path.join(folder, "FASTA")
+        combined_fasta_dir = os.path.join(folder, "combined_fasta_file.fasta")
+        cff = open(combined_fasta_dir, 'w')
+
+        for file in os.listdir(DIR):
+            sff = open(os.path.join(DIR, file))
+            for line in sff:
+                cff.write(line)
+            sff.close()
+        cff.close()
+
