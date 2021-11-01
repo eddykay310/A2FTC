@@ -1,4 +1,4 @@
-# ABI-2-FASTA-TFR-Consolidator
+# ABI-2-FASTA-TRF-Consolidator
 
 ## Table of Contents
 - [Purpose](#Purpose)
