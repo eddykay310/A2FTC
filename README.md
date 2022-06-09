@@ -19,4 +19,8 @@ and converts them to **FASTA** files using the [Biopython](https://biopython.org
 ## Usage
 - Python 3 has to be installed.
 - Run `python app.py` to open the app GUI.
-- Add folder containing the .abi files and run.
+- Add folder containing the abi files
+- Convert abi to fasta files if fasta files are not present
+- Combine fasta files before running tandem repeat finder
+- Run tandem repeat finder on fasta file
+- Extract results from out in a tabel using the Dataframe Maker
