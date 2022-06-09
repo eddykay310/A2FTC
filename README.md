@@ -17,6 +17,6 @@ and converts them to **FASTA** files using the [Biopython](https://biopython.org
 ***sort_csld.py*-** Files can be sorted using unique consistent strings from the file names of individual FASTA files into desired folders based on chosen folder names. Sorted files are combined to a single file using into a single FASTA file.
 
 ## Usage
-### Python 3 has to be installed.
-### Run python app.py to open the app GUI.
-### Add folder containing the .abi files and run.
+- Python 3 has to be installed.
+- Run `python app.py` to open the app GUI.
+- Add folder containing the .abi files and run.
