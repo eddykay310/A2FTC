@@ -7,7 +7,7 @@
 - [Usage](#Usage)
 
 ## Purpose
-A2FTC is a simple pipeline to fast track the generation of tandem repeat data based on the tandem repeat finder program by the Benson Genomic Lab. This is help users with no coding skills skip the laborious task of using the online version through the generation of an excel output of all relevant metrics from converting their abi sequence files. Also, unsorted FASTA files can be sorted by using user-entered distinct strings that can be used to sort files and generate a single FASTA file that can be used for downstream clustering analysis.
+A2FTC is a simple python script to fast track the generation of tandem repeat data based on the tandem repeat finder program by the Benson Genomic Lab. This is help users with no coding skills skip the laborious task of using the online version through the generation of an excel output of all relevant metrics from converting their abi sequence files. Also, unsorted FASTA files can be sorted by using user-entered distinct strings that can be used to sort files and generate a single FASTA file that can be used for downstream clustering analysis.
 
 ## ABI-2-FASTA & Tandem Repeat Finding
 ***A2FTC.py*-** This is a python program that takes folders that contain  **.abi** sequencing files 
