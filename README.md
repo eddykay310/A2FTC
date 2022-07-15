@@ -1,4 +1,4 @@
-# ABI-2-FASTA-TRF-Consolidator
+# A2FTC (ABI_TRF-Consolidator)
 
 ## Table of Contents
 - [Purpose](#Purpose)
